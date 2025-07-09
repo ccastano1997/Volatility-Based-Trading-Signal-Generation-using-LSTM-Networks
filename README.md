@@ -72,14 +72,13 @@ The model was trained on data from 2010 to late 2021 and tested on unseen data f
 
 The backtest results show that the LSTM-based strategy **successfully outperformed the SPY buy-and-hold benchmark** over the test period. The strategy was able to capture market gains while better navigating periods of high volatility and drawdowns.
 
-*You should upload your graph images to the GitHub repository and then link them here.*
-![Strategy Performance](path/to/your/graph1.png)
+![Strategy Performance vs. Buy and Hold](graph1.png)
 
 ### Model Training History
 
 Interestingly, while the final strategy was profitable, the model's validation accuracy remained relatively low (around 58%). This highlights a key concept in algorithmic trading: a model doesn't need to be perfect to have a profitable edge.
 
-![Model Training History](path/to/your/graph2.png)
+![Model Training History](graph2.png)
 
 ---
 
