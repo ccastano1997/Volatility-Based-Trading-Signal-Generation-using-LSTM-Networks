@@ -50,7 +50,7 @@ Make sure you have Python 3.8+ installed on your system.
     ```
 2.  **Navigate to the project directory:**
     ```sh
-    cd [Volatility-Based-Trading-Signal-Generation-using-LSTM-Networks]
+    cd Volatility-Based-Trading-Signal-Generation-using-LSTM-Networks
     ```
 3.  **Install the required packages:**
     ```sh
