@@ -13,19 +13,24 @@ The primary goal was to develop an end-to-end quantitative trading workflow, fro
 * **Backtesting:** Includes a simple backtesting engine to evaluate strategy performance on out-of-sample data.
 * **Performance Visualization:** Generates clear visualizations of the strategy's equity curve against the benchmark.
 
+The project progressed through three main iterations:
+1.  **V1 - Baseline Model:** A simple LSTM model to establish a performance baseline.
+2.  **V2 - Advanced Model:** A more complex model with richer features, which revealed signs of overfitting.
+3.  **V3 - Optimized Model:** The final model incorporating regularization techniques to combat overfitting and produce a more robust strategy.
+
 ---
 
 ## 🛠️ Technologies Used
 
 This project is built with Python 3 and leverages the following libraries:
 
-* [TensorFlow](https://www.tensorflow.org/)
-* [Pandas](https://pandas.pydata.org/)
+* [TensorFlow](https://www.tensorflow.org/) & [Keras](https://keras.io/)
+* [Pandas](https://pandas.pydata.org/) & [pandas_ta](https://pypi.org/project/pandas-ta/)
 * [NumPy](https://numpy.org/)
 * [Scikit-learn](https://scikit-learn.org/stable/)
 * [yfinance](https://pypi.org/project/yfinance/)
-* [pandas_ta](https://pypi.org/project/pandas-ta/)
 * [Matplotlib](https://matplotlib.org/)
+
 
 ---
 
@@ -45,7 +50,7 @@ Make sure you have Python 3.8+ installed on your system.
     ```
 2.  **Navigate to the project directory:**
     ```sh
-    cd [your-repo-name]
+    cd [Volatility-Based-Trading-Signal-Generation-using-LSTM-Networks]
     ```
 3.  **Install the required packages:**
     ```sh
@@ -57,31 +62,57 @@ Make sure you have Python 3.8+ installed on your system.
 
 ## 🏃‍♀️ Usage
 
-The entire workflow is contained within the Jupyter Notebook (`trading_strategy.ipynb`).
+The entire workflow, including the V1, V2, and V3 models, is contained within the Jupyter Notebook (`.ipynb` file). The cells can be run sequentially to reproduce the results.
 
 1.  Open the notebook in Jupyter or Google Colab.
 2.  Run the cells sequentially from top to bottom to execute the data preparation, model training, and backtesting process.
 
 ---
 
-## 📊 Results
+## 📊 Results & Model Iteration
 
-The model was trained on data from 2010 to late 2021 and tested on unseen data from late 2021 to mid-2024.
+The model was trained on SPY data from 2010 to late 2021 and tested on unseen data from late 2021 to mid-2024.
 
-### Strategy Performance vs. Buy and Hold
+### V1 - Baseline Model
 
-The backtest results show that the LSTM-based strategy **successfully outperformed the SPY buy-and-hold benchmark** over the test period. The strategy was able to capture market gains while better navigating periods of high volatility and drawdowns.
+The first version was a simple Bidirectional LSTM model using standard technical indicators (RSI, MACD, Bollinger Bands).
 
-![Strategy Performance vs. Buy and Hold](graph1.png)
+* **Result:** The backtest showed significant outperformance against the benchmark. However, the model's low accuracy on the validation set suggested this result was likely due to luck or overfitting to the specific test period rather than a genuinely predictive "edge."
 
-### Model Training History
+![V1 Strategy Performance](graph1.png)
 
-Interestingly, while the final strategy was profitable, the model's validation accuracy remained relatively low (around 58%). This highlights a key concept in algorithmic trading: a model doesn't need to be perfect to have a profitable edge.
+### V2 - Advanced Model & Diagnosing Overfitting
 
-![Model Training History](graph2.png)
+To improve on the baseline, the V2 model was developed with a more complex architecture (deeper and wider LSTM layers) and a richer feature set (including the VIX, ATR, and OBV indicators).
+
+* **Result:** The training accuracy for this model was very high (>80%), but the validation accuracy was significantly lower (~78%). The backtest showed no outperformance. This is a classic case of **overfitting**, where the model memorized the training data's noise instead of learning a generalizable pattern.
+
+![V2 Training History](graph4.png)
+![V2 Strategy Performance](graph5.png)
+
+### V3 - Optimized Model with Regularization
+
+The final version addressed the overfitting identified in V2 by introducing professional regularization techniques.
+
+* **Techniques Used:**
+    * **Increased Dropout:** Forced the network to learn more robust features.
+    * **L2 Regularization:** Penalized large weights to prevent the model from becoming too complex.
+    * **Early Stopping:** Monitored the validation loss and automatically stopped training when performance on unseen data no longer improved.
+* **Result:** The training process for the V3 model was successfully controlled, preventing overfitting. The final backtest performance tracks the market benchmark closely. While not generating significant "alpha," this result is far more realistic and robust than the V1 model's lucky outcome.
+
+![V3 Training History](graph6.png)
+![V3 Strategy Performance](graph7.png)
+
+---
+
+## Key Takeaways
+
+* **The Importance of Iteration:** This project demonstrates the full research cycle, from a simple baseline to diagnosing issues like overfitting and implementing advanced solutions.
+* **Overfitting is a Key Challenge:** A model with high accuracy on training data is not necessarily a good model. Techniques to combat overfitting are critical for building reliable trading strategies.
+* **Realistic Expectations:** Consistently outperforming the market is extremely difficult. A backtest that closely tracks the benchmark is often a more realistic and trustworthy result than one that shows extreme, unexplained profits.
 
 ---
 
 ## ⚠️ Disclaimer
 
-This project is for educational and demonstrational purposes only. The model and strategy presented here are not intended as financial advice. Trading financial instruments involves significant risk, and past performance is not indicative of future results.
+This project is for educational and demonstrational purposes only. The models and strategies presented here are not intended as financial advice. Trading financial instruments involves significant risk, and past performance is not indicative of future results.
